@@ -8,11 +8,6 @@ use Illuminate\View\View;
 
 class MediaController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:media.view')->only('index');
-    }
-
     public function index(): View
     {
         return view('admin.media.index', [

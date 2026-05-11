@@ -11,14 +11,6 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:categories.view')->only(['index', 'edit']);
-        $this->middleware('permission:categories.create')->only(['create', 'store']);
-        $this->middleware('permission:categories.update')->only('update');
-        $this->middleware('permission:categories.delete')->only('destroy');
-    }
-
     public function index(): View
     {
         return view('admin.categories.index', [

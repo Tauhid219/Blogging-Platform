@@ -11,14 +11,6 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:pages.view')->only(['index', 'show']);
-        $this->middleware('permission:pages.create')->only(['create', 'store']);
-        $this->middleware('permission:pages.update')->only(['edit', 'update']);
-        $this->middleware('permission:pages.delete')->only('destroy');
-    }
-
     public function index(): View
     {
         return view('admin.pages.index', [

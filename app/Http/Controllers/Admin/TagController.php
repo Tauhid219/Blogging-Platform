@@ -11,14 +11,6 @@ use Illuminate\View\View;
 
 class TagController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:tags.view')->only(['index', 'edit']);
-        $this->middleware('permission:tags.create')->only(['create', 'store']);
-        $this->middleware('permission:tags.update')->only('update');
-        $this->middleware('permission:tags.delete')->only('destroy');
-    }
-
     public function index(): View
     {
         return view('admin.tags.index', [

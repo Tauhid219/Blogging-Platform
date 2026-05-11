@@ -10,12 +10,6 @@ use Illuminate\View\View;
 
 class SettingController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:settings.view')->only('edit');
-        $this->middleware('permission:settings.update')->only('update');
-    }
-
     public function edit(): View
     {
         return view('admin.settings.edit', [

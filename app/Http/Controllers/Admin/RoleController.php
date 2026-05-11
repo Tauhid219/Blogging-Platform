@@ -11,12 +11,6 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:roles.view')->only(['index', 'edit']);
-        $this->middleware('permission:roles.update')->only('update');
-    }
-
     public function index(): View
     {
         return view('admin.roles.index', [

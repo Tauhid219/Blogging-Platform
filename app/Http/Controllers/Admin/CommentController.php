@@ -10,13 +10,6 @@ use Illuminate\View\View;
 
 class CommentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('permission:comments.view')->only(['index', 'edit']);
-        $this->middleware('permission:comments.update')->only('update');
-        $this->middleware('permission:comments.delete')->only('destroy');
-    }
-
     public function index(): View
     {
         return view('admin.comments.index', [
