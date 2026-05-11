@@ -1,30 +1,40 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-                </a>
+<html lang="en" class="min-h-screen">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $siteSettings['site_name'] ?? config('app.name') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('vendor/daiva/favicon.png') }}">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        :root { font-family: "Roboto", sans-serif; }
+        .playfair { font-family: "Playfair Display", serif; }
+    </style>
+</head>
+<body class="min-h-screen bg-stone-100">
+    <div class="min-h-screen flex flex-col justify-between">
+        @include('partials.frontend.header')
+        <main class="px-4 py-16">
+            <div class="mx-auto grid w-full max-w-5xl gap-10 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
+                <div class="space-y-6">
+                    <small class="border-l-2 border-black pl-3 text-xs uppercase tracking-[0.3em] text-stone-500">Secure access</small>
+                    <h1 class="playfair text-4xl font-bold text-stone-900 md:text-6xl">Welcome back to the editorial workspace.</h1>
+                    <p class="max-w-xl text-lg text-stone-600">Manage your writing pipeline, collaborate with editors, and publish with a workflow that is built for a real multi-author platform.</p>
+                    <div class="flex gap-4 text-sm text-stone-500">
+                        <span class="rounded-full bg-white px-4 py-2 shadow-sm">Multi-role access</span>
+                        <span class="rounded-full bg-white px-4 py-2 shadow-sm">Structured publishing</span>
+                    </div>
+                </div>
+                <div class="rounded-[2rem] bg-white p-8 shadow-xl shadow-stone-300/50">
+                    {{ $slot }}
+                </div>
             </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
-            </div>
-        </div>
-    </body>
+        </main>
+        @include('partials.frontend.footer')
+    </div>
+</body>
 </html>
