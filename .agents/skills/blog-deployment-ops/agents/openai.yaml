@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog Deployment Ops"
+  short_description: "Deployment and operations workflow for this blog"
+  default_prompt: "Use $blog-deployment-ops to prepare deployment or operations updates for this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Media library')
+@php
+    $title = 'Media library';
+@endphp
 
 @section('content')
     <div class="card">

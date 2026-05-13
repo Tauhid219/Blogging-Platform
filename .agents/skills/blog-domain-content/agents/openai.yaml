@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog Domain Content"
+  short_description: "Schema and content workflow for the blog domain"
+  default_prompt: "Use $blog-domain-content to update schema, models, or content workflows in this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

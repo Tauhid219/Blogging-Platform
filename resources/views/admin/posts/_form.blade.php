@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group">
                     <label>Body</label>
-                    <textarea name="body" rows="14" class="form-control" required>{{ old('body', $post->body) }}</textarea>
+                    <textarea name="body" rows="14" class="form-control rich-text-editor" required>{{ old('body', $post->body) }}</textarea>
                 </div>
             </div>
         </div>
@@ -46,16 +46,43 @@
                 <div class="form-group">
                     <label>Tags</label>
                     <select name="tag_ids[]" class="form-control" multiple size="8">
-                        @php($selectedTags = collect(old('tag_ids', $post->tags->pluck('id')->all())))
+                        @php
+                            $selectedTags = collect(old('tag_ids', $post->tags->pluck('id')->all()));
+                        @endphp
                         @foreach ($tags as $tag)
                             <option value="{{ $tag->id }}" @selected($selectedTags->contains($tag->id))>{{ $tag->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Featured image URL</label>
-                    <input type="text" name="featured_image_path" class="form-control" value="{{ old('featured_image_path', $post->featured_image_path) }}">
+                    <label for="featured_image_upload">Featured image upload</label>
+                    <div class="custom-file">
+                        <input type="file" name="featured_image_upload" class="custom-file-input" id="featured_image_upload" accept=".jpg,.jpeg,.png,.webp,.gif">
+                        <label class="custom-file-label" for="featured_image_upload">Choose featured image</label>
+                    </div>
+                    <small class="form-text text-muted">Validation: JPG, JPEG, PNG, WEBP, or GIF only. Maximum file size: 5 MB. Wider cover images work best.</small>
+                    @error('featured_image_upload')
+                        <span class="text-danger small d-block mt-1">{{ $message }}</span>
+                    @enderror
                 </div>
+                <div class="form-group">
+                    <label for="featured_image_path">Featured image URL</label>
+                    <input type="text" id="featured_image_path" name="featured_image_path" class="form-control" value="{{ old('featured_image_path', $post->featured_image_path) }}">
+                    <small class="form-text text-muted">You can also paste an external image URL. Uploaded files take priority.</small>
+                </div>
+                @if (old('featured_image_path', $post->featured_image_url))
+                    <div class="form-group">
+                        <label>Current featured image</label>
+                        <div class="border rounded p-2 bg-light">
+                            <img
+                                src="{{ old('featured_image_path') ?: $post->featured_image_url }}"
+                                alt="{{ $post->title ?: 'Featured image preview' }}"
+                                class="img-fluid rounded"
+                                style="max-height: 220px; object-fit: cover;"
+                            >
+                        </div>
+                    </div>
+                @endif
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" value="1" name="is_featured" id="is_featured" @checked(old('is_featured', $post->is_featured))>
                     <label class="form-check-label" for="is_featured">Feature this post</label>

@@ -6,10 +6,21 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-class CommentController extends Controller
+class CommentController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:manage comments', only: ['index']),
+            new Middleware('permission:edit comments', only: ['edit', 'update']),
+            new Middleware('permission:delete comments', only: ['destroy']),
+        ];
+    }
+
     public function index(): View
     {
         return view('admin.comments.index', [

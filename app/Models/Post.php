@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -79,8 +81,26 @@ class Post extends Model
         return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
 
+    public function featuredImageMedia(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'mediable');
+    }
+
     public function isPublished(): bool
     {
         return $this->status === 'published' && filled($this->published_at) && $this->published_at->lte(now());
+    }
+
+    public function getFeaturedImageUrlAttribute(): ?string
+    {
+        if (blank($this->featured_image_path)) {
+            return null;
+        }
+
+        if (filter_var($this->featured_image_path, FILTER_VALIDATE_URL) || str_starts_with($this->featured_image_path, '/')) {
+            return $this->featured_image_path;
+        }
+
+        return Storage::disk('public')->url($this->featured_image_path);
     }
 }

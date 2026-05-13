@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog Media Workflow"
+  short_description: "Upload and attachment workflow for blog media"
+  default_prompt: "Use $blog-media-upload-workflow to implement or refine media uploads in this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

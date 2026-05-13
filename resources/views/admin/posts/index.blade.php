@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Posts')
+@php
+    $title = 'Posts';
+@endphp
 
 @section('content')
     <div class="card">

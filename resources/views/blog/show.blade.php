@@ -15,7 +15,7 @@
                     <p class="max-w-3xl text-lg text-stone-600">{{ $post->excerpt }}</p>
                 </div>
 
-                <img class="w-full rounded-[2rem] object-cover" src="{{ $post->featured_image_path ?: asset('vendor/daiva/codye2.png') }}" alt="{{ $post->title }}">
+                <img class="w-full rounded-[2rem] object-cover" src="{{ $post->featured_image_url ?: ($siteSettings['fallback_post_image_url'] ?? asset('vendor/daiva/codye2.png')) }}" alt="{{ $post->title }}">
 
                 <div class="prose max-w-none rounded-[2rem] bg-white p-8 shadow-sm prose-headings:font-serif prose-p:text-stone-700">
                     {!! $post->body !!}

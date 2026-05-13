@@ -12,41 +12,23 @@ class PermissionSeeder extends Seeder
     {
         app(PermissionRegistrar::class)->forgetCachedPermissions();
 
-        $permissions = [
-            'dashboard.view',
-            'posts.view',
-            'posts.create',
-            'posts.update',
-            'posts.publish',
-            'posts.delete',
-            'categories.view',
-            'categories.create',
-            'categories.update',
-            'categories.delete',
-            'tags.view',
-            'tags.create',
-            'tags.update',
-            'tags.delete',
-            'comments.view',
-            'comments.update',
-            'comments.delete',
-            'media.view',
-            'media.create',
-            'media.delete',
-            'pages.view',
-            'pages.create',
-            'pages.update',
-            'pages.delete',
-            'users.view',
-            'users.update',
-            'roles.view',
-            'roles.update',
-            'settings.view',
-            'settings.update',
-        ];
+        $modules = ['users', 'roles', 'categories', 'tags', 'posts', 'comments', 'media', 'pages', 'settings'];
+        $actions = ['manage', 'create', 'edit', 'delete'];
+
+        $permissions = [];
+
+        foreach ($modules as $module) {
+            foreach ($actions as $action) {
+                $permissions[] = "{$action} {$module}";
+            }
+        }
+
+        $permissions[] = 'access dashboard';
 
         foreach ($permissions as $permission) {
             Permission::findOrCreate($permission, 'web');
         }
+
+        Permission::whereNotIn('name', $permissions)->get()->each->delete();
     }
 }

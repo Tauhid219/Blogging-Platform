@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Categories')
+@php
+    $title = 'Categories';
+@endphp
 
 @section('content')
     <div class="row">

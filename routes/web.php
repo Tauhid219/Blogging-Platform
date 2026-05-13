@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TagController;
@@ -30,23 +31,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::prefix('admin')->name('admin.')->group(function () {
-        Route::get('/', DashboardController::class)->name('dashboard')->middleware('permission:dashboard.view');
+        Route::get('/', DashboardController::class)->name('dashboard');
 
-        Route::resource('posts', PostController::class)->middleware('permission:posts.view');
-        Route::resource('categories', CategoryController::class)->except(['show'])->middleware('permission:categories.view');
-        Route::resource('tags', TagController::class)->except(['show'])->middleware('permission:tags.view');
-        Route::resource('comments', CommentController::class)->only(['index', 'edit', 'update', 'destroy'])->middleware('permission:comments.view');
-        Route::get('media', [MediaController::class, 'index'])->name('media.index')->middleware('permission:media.view');
-        Route::resource('pages', AdminPageController::class)->middleware('permission:pages.view');
-        Route::resource('users', UserController::class)->only(['index', 'edit', 'update'])->middleware('permission:users.view');
-        Route::resource('roles', RoleController::class)->only(['index', 'edit', 'update'])->middleware('permission:roles.view');
-        Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit')->middleware('permission:settings.view');
-        Route::put('settings', [SettingController::class, 'update'])->name('settings.update')->middleware('permission:settings.update');
+        Route::resource('posts', PostController::class);
+        Route::resource('categories', CategoryController::class)->except(['show']);
+        Route::resource('tags', TagController::class)->except(['show']);
+        Route::resource('comments', CommentController::class)->only(['index', 'edit', 'update', 'destroy']);
+        Route::get('media', [MediaController::class, 'index'])->name('media.index');
+        Route::post('media/editor-upload', [MediaController::class, 'storeEditorImage'])->name('media.editor-upload');
+        Route::resource('pages', AdminPageController::class);
+        Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
+        Route::resource('roles', RoleController::class)->only(['index', 'edit', 'update']);
+        Route::get('profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('profile', [AdminProfileController::class, 'update'])->name('profile.update');
+        Route::put('profile/password', [AdminProfileController::class, 'updatePassword'])->name('profile.password.update');
+        Route::delete('profile', [AdminProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
+        Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     });
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', function () {
+        return redirect()->route('admin.profile.edit');
+    })->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

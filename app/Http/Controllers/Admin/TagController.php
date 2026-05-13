@@ -6,11 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class TagController extends Controller
+class TagController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:manage tags', only: ['index']),
+            new Middleware('permission:create tags', only: ['create', 'store']),
+            new Middleware('permission:edit tags', only: ['edit', 'update']),
+            new Middleware('permission:delete tags', only: ['destroy']),
+        ];
+    }
+
     public function index(): View
     {
         return view('admin.tags.index', [

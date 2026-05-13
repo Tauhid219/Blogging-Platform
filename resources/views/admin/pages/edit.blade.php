@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Edit page')
+@php
+    $title = 'Edit page';
+@endphp
 
 @section('content')
     <form method="POST" action="{{ route('admin.pages.update', $page) }}">
@@ -9,3 +11,5 @@
         @include('admin.pages.form', ['submitLabel' => 'Save changes'])
     </form>
 @endsection
+
+@include('admin.partials.rich-text-editor')

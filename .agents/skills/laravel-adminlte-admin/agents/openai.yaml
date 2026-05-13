@@ -1,0 +1,7 @@
+interface:
+  display_name: "Laravel Admin Panel"
+  short_description: "AdminLTE workflow for admin routes and CRUD UI"
+  default_prompt: "Use $laravel-adminlte-admin to update the admin panel in this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

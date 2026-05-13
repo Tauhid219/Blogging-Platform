@@ -27,7 +27,7 @@ class BlogSeeder extends Seeder
             ]
         );
 
-        $admin->assignRole('super_admin');
+        $admin->syncRoles(['super-admin']);
 
         UserProfile::updateOrCreate(
             ['user_id' => $admin->id],
@@ -97,6 +97,7 @@ class BlogSeeder extends Seeder
                 'title' => 'About the platform',
                 'excerpt' => 'A short introduction to the editorial mission and technical foundation of the platform.',
                 'body' => '<p>This platform is built for multi-user blogging with strong editorial controls, clean publishing flows, and scalable content structure.</p>',
+                'template' => 'about',
                 'status' => 'published',
                 'published_at' => now()->subDay(),
                 'seo_title' => 'About the platform',
@@ -109,6 +110,7 @@ class BlogSeeder extends Seeder
             'site_tagline' => 'Build by developers for developers',
             'site_description' => 'A production-minded Laravel blogging platform with a structured publishing workflow.',
             'contact_email' => 'admin@example.com',
+            'fallback_post_image_path' => null,
         ] as $key => $value) {
             Setting::updateOrCreate(
                 ['group' => 'site', 'key' => $key],

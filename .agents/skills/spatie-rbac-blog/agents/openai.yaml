@@ -1,0 +1,7 @@
+interface:
+  display_name: "Spatie RBAC Blog"
+  short_description: "Role and permission workflow for this blog"
+  default_prompt: "Use $spatie-rbac-blog to update roles, permissions, or authorization in this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

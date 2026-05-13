@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog Testing Patterns"
+  short_description: "Testing workflow for blog features and regressions"
+  default_prompt: "Use $blog-testing-patterns to add or refine tests for this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

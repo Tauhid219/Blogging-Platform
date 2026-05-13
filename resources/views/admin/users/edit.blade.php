@@ -1,8 +1,14 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Edit user')
+@php
+    $title = 'Edit user';
+@endphp
 
 @section('content')
+    @php
+        $currentRoles = collect(old('roles', $user->roles->pluck('name')->all()));
+    @endphp
+
     <div class="card">
         <form method="POST" action="{{ route('admin.users.update', $user) }}">
             @csrf
@@ -19,7 +25,6 @@
                 <div class="form-group">
                     <label>Roles</label>
                     <select name="roles[]" class="form-control" multiple size="6">
-                        @php($currentRoles = collect(old('roles', $user->roles->pluck('name')->all())))
                         @foreach ($roles as $role)
                             <option value="{{ $role->name }}" @selected($currentRoles->contains($role->name))>{{ $role->name }}</option>
                         @endforeach

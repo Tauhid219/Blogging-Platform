@@ -5,55 +5,36 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class RoleSeeder extends Seeder
 {
     public function run(): void
     {
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+
         $allPermissions = Permission::pluck('name')->all();
+        $authorPermissions = [
+            'access dashboard',
+            'manage posts',
+            'create posts',
+            'edit posts',
+            'manage media',
+            'create media',
+            'edit media',
+        ];
 
         $roles = [
-            'super_admin' => $allPermissions,
+            'super-admin' => $allPermissions,
             'admin' => $allPermissions,
-            'editor' => [
-                'dashboard.view',
-                'posts.view',
-                'posts.create',
-                'posts.update',
-                'posts.publish',
-                'categories.view',
-                'categories.create',
-                'categories.update',
-                'tags.view',
-                'tags.create',
-                'tags.update',
-                'comments.view',
-                'comments.update',
-                'pages.view',
-                'pages.create',
-                'pages.update',
-                'media.view',
-                'media.create',
-            ],
-            'author' => [
-                'dashboard.view',
-                'posts.view',
-                'posts.create',
-                'posts.update',
-                'media.view',
-                'media.create',
-            ],
-            'moderator' => [
-                'dashboard.view',
-                'comments.view',
-                'comments.update',
-                'comments.delete',
-            ],
+            'author' => $authorPermissions,
         ];
 
         foreach ($roles as $name => $permissions) {
             $role = Role::findOrCreate($name, 'web');
             $role->syncPermissions($permissions);
         }
+
+        Role::whereNotIn('name', array_keys($roles))->get()->each->delete();
     }
 }

@@ -1,6 +1,6 @@
 <article class="flex h-full flex-col gap-4 rounded-[2rem] bg-white p-5 shadow-sm">
     <div class="aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-stone-100">
-        <img class="h-full w-full object-cover" src="{{ $post->featured_image_path ?: asset('vendor/daiva/codye2.png') }}" alt="{{ $post->title }}">
+        <img class="h-full w-full object-cover" src="{{ $post->featured_image_url ?: ($siteSettings['fallback_post_image_url'] ?? asset('vendor/daiva/codye2.png')) }}" alt="{{ $post->title }}">
     </div>
     <div class="space-y-3">
         <div class="text-xs uppercase tracking-[0.3em] text-stone-400">

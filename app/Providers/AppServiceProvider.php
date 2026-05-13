@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Setting;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::before(function ($user, $ability) {
+            return $user->hasRole('super-admin') ? true : null;
+        });
+
         View::composer('*', function ($view): void {
             $settings = collect();
             $categories = collect();
@@ -32,6 +38,14 @@ class AppServiceProvider extends ServiceProvider
             if (Schema::hasTable('settings')) {
                 $settings = Setting::where('group', 'site')->get()->mapWithKeys(
                     fn (Setting $setting) => [$setting->key => data_get($setting->value, $setting->key)]
+                );
+
+                $fallbackPostImagePath = $settings->get('fallback_post_image_path');
+                $settings->put(
+                    'fallback_post_image_url',
+                    filled($fallbackPostImagePath)
+                        ? Storage::disk('public')->url($fallbackPostImagePath)
+                        : asset('vendor/daiva/codye2.png')
                 );
             }
 

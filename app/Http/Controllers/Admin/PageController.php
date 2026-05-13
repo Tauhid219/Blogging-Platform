@@ -6,11 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
-class PageController extends Controller
+class PageController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:manage pages', only: ['index', 'show']),
+            new Middleware('permission:create pages', only: ['create', 'store']),
+            new Middleware('permission:edit pages', only: ['edit', 'update']),
+            new Middleware('permission:delete pages', only: ['destroy']),
+        ];
+    }
+
     public function index(): View
     {
         return view('admin.pages.index', [

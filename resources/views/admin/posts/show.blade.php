@@ -1,13 +1,22 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Post details')
+@php
+    $title = 'Post details';
+@endphp
 
 @section('content')
     <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header"><h3 class="card-title">{{ $post->title }}</h3></div>
-                <div class="card-body">{!! $post->body !!}</div>
+                <div class="card-body">
+                    @if ($post->featured_image_url)
+                        <div class="mb-4">
+                            <img src="{{ $post->featured_image_url }}" alt="{{ $post->title }}" class="img-fluid rounded">
+                        </div>
+                    @endif
+                    {!! $post->body !!}
+                </div>
             </div>
         </div>
         <div class="col-md-4">

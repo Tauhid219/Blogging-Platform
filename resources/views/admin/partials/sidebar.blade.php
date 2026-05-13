@@ -10,13 +10,13 @@
                 <img src="{{ asset('vendor/adminlte/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User">
             </div>
             <div class="info">
-                <a href="{{ route('profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
+                <a href="{{ route('admin.profile.edit') }}" class="d-block">{{ auth()->user()->name }}</a>
             </div>
         </div>
 
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                @can('dashboard.view')
+                @can('access dashboard')
                     <li class="nav-item">
                         <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -24,7 +24,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('posts.view')
+                @can('manage posts')
                     <li class="nav-item">
                         <a href="{{ route('admin.posts.index') }}" class="nav-link {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-newspaper"></i>
@@ -32,7 +32,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('categories.view')
+                @can('manage categories')
                     <li class="nav-item">
                         <a href="{{ route('admin.categories.index') }}" class="nav-link {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-sitemap"></i>
@@ -40,7 +40,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('tags.view')
+                @can('manage tags')
                     <li class="nav-item">
                         <a href="{{ route('admin.tags.index') }}" class="nav-link {{ request()->routeIs('admin.tags.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tags"></i>
@@ -48,7 +48,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('comments.view')
+                @can('manage comments')
                     <li class="nav-item">
                         <a href="{{ route('admin.comments.index') }}" class="nav-link {{ request()->routeIs('admin.comments.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-comments"></i>
@@ -56,7 +56,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('media.view')
+                @can('manage media')
                     <li class="nav-item">
                         <a href="{{ route('admin.media.index') }}" class="nav-link {{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-photo-video"></i>
@@ -64,7 +64,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('pages.view')
+                @can('manage pages')
                     <li class="nav-item">
                         <a href="{{ route('admin.pages.index') }}" class="nav-link {{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-file-alt"></i>
@@ -72,7 +72,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('users.view')
+                @can('manage users')
                     <li class="nav-item">
                         <a href="{{ route('admin.users.index') }}" class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-users"></i>
@@ -80,7 +80,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('roles.view')
+                @can('manage roles')
                     <li class="nav-item">
                         <a href="{{ route('admin.roles.index') }}" class="nav-link {{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-user-shield"></i>
@@ -88,7 +88,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('settings.view')
+                @can('manage settings')
                     <li class="nav-item">
                         <a href="{{ route('admin.settings.edit') }}" class="nav-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-cogs"></i>

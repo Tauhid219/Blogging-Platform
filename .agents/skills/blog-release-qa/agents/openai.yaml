@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog Release QA"
+  short_description: "Verification and launch-readiness workflow"
+  default_prompt: "Use $blog-release-qa to validate this blogging platform before finalizing changes."
+
+policy:
+  allow_implicit_invocation: true

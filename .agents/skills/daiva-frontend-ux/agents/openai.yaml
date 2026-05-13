@@ -1,0 +1,7 @@
+interface:
+  display_name: "Daiva Frontend UX"
+  short_description: "Public blog UI workflow with Daiva styling"
+  default_prompt: "Use $daiva-frontend-ux to improve the public frontend of this blogging platform."
+
+policy:
+  allow_implicit_invocation: true

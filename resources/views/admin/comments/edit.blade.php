@@ -1,6 +1,8 @@
 @extends('admin.layouts.app')
 
-@php($title = 'Review comment')
+@php
+    $title = 'Review comment';
+@endphp
 
 @section('content')
     <div class="card">

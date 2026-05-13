@@ -9,10 +9,19 @@ use App\Models\Page;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\View\View;
 
-class DashboardController extends Controller
+class DashboardController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('permission:access dashboard'),
+        ];
+    }
+
     public function __invoke(): View
     {
         return view('admin.pages.dashboard', [

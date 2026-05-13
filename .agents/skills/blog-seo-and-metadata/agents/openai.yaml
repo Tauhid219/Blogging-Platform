@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog SEO Metadata"
+  short_description: "SEO and metadata workflow for public pages"
+  default_prompt: "Use $blog-seo-and-metadata to improve metadata and SEO behavior in this blogging platform."
+
+policy:
+  allow_implicit_invocation: true
